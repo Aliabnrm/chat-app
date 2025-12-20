@@ -1,25 +1,23 @@
-import { NextRequest, NextResponse } from 'next/server'
-import jwt from 'jsonwebtoken'
+import { NextRequest, NextResponse } from "next/server";
+import { jwtVerify } from "jose";
 
-// rememmber me for add role based
+const secret = new TextEncoder().encode(process.env.JWT_SECRET_KEY!);
 
-const JWT_SECRET = process.env.JWT_SECRET_KEY as string
-
-export function middleware(request: NextRequest) {
-  const token = request.cookies.get('token')?.value
+export async function middleware(request: NextRequest) {
+  const token = request.cookies.get("token")?.value;
 
   if (!token) {
-    return NextResponse.redirect(new URL('/sign-in', request.url))
+    return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
   try {
-    jwt.verify(token, JWT_SECRET)
-    return NextResponse.next()
+    await jwtVerify(token, secret);
+    return NextResponse.next();
   } catch {
-    return NextResponse.redirect(new URL('/sign-in', request.url))
+    return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 }
 
 export const config = {
-  matcher: ['/', '/dashboard/:path*',],
-}
+  matcher: ["/dashboard/:path*"],
+};

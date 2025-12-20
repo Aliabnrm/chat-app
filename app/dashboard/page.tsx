@@ -1,26 +1,20 @@
-import { cookies } from 'next/headers'
-import jwt from 'jsonwebtoken'
-import { redirect } from 'next/navigation'
-import Logout from '../(auth)/logout'
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
+import { redirect } from "next/navigation";
 
-const JWT_SECRET = 'your_secret_key'
+export default function DashboardPage() {
+  const cookieStore = cookies() as ReturnType<typeof cookies>;
 
-export default async function DashboardPage() {
-  const cookieStore = await cookies()
-  const token = cookieStore.get('token')?.value
+  const token = cookieStore.get("token")?.value;
+
+  if (!token) return redirect("/sign-in");
 
   try {
-    if (!token) throw new Error('No token')
-    const user = jwt.verify(token, JWT_SECRET) as { email: string }
-    return (
-      <div className="p-4">
-        <h1 className="text-2xl font-bold">سلام {user.email} 👋</h1>
-        <p>به داشبورد خوش اومدی</p>
-
-        <Logout />
-      </div>
-    )
-  } catch (err) {
-    redirect('/sign-in')
+    const user = jwt.verify(token, process.env.JWT_SECRET_KEY!) as {
+      email: string;
+    };
+    return <div>سلام {user.email}</div>;
+  } catch {
+    return redirect("/sign-in");
   }
 }
