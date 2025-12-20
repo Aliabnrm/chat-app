@@ -1,10 +1,11 @@
-// components/NavbarServer.tsx
-import { getUserFromToken } from "@/src/hooks/useAuth";
 import NavbarClient from "./NavbarClient";
 
-const NavbarServer = () => {
-  const user = getUserFromToken();
-  return <NavbarClient userEmail={user?.email || ""} />;
+type Props = {
+  userEmail: string;
+};
+
+const NavbarServer = ({ userEmail }: Props) => {
+  return <NavbarClient userEmail={userEmail} />;
 };
 
 export default NavbarServer;

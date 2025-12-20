@@ -1,20 +1,10 @@
-import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
 import { redirect } from "next/navigation";
+import { getUserInfo } from "@/hooks/useAuth";
 
-export default function DashboardPage() {
-  const cookieStore = cookies() as ReturnType<typeof cookies>;
+export default async function DashboardPage() {
+  const user = await getUserInfo();
 
-  const token = cookieStore.get("token")?.value;
+  if (!user) return redirect("/sign-in");
 
-  if (!token) return redirect("/sign-in");
-
-  try {
-    const user = jwt.verify(token, process.env.JWT_SECRET_KEY!) as {
-      email: string;
-    };
-    return <div>سلام {user.email}</div>;
-  } catch {
-    return redirect("/sign-in");
-  }
+  return <div>{user.email}</div>;
 }

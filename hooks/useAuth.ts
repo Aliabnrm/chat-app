@@ -1,18 +1,22 @@
-import { cookies } from 'next/headers'
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
-const JWT_SECRET = process.env.JWT_SECRET_KEY as string
+type UserPayload = {
+  email: string;
+};
 
-export async function getUserFromToken(): Promise<{ email: string } | null> {
-  const cookieStore = await cookies()
-  const token = cookieStore.get('token')?.value
+const JWT_SECRET = process.env.JWT_SECRET_KEY!;
 
-  if (!token) return null
-
+export async function getUserInfo(): Promise<UserPayload | null> {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { email: string }
-    return { email: decoded.email }
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
+
+    if (!token) return null;
+
+    const decoded = jwt.verify(token, JWT_SECRET) as UserPayload;
+    return { email: decoded.email };
   } catch {
-    return null
+    return null;
   }
 }
