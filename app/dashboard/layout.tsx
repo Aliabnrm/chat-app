@@ -1,6 +1,6 @@
 import React from "react";
 import { redirect } from "next/navigation";
-import { getUserInfo } from "@/hooks/useAuth";
+import { getUserInfo } from "@/src/hooks/useAuth";
 import NavbarServer from "@/src/components/Navbar/NavbarServer";
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {

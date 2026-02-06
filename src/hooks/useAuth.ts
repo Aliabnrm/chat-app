@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 
 const JWT_SECRET = process.env.JWT_SECRET_KEY as string;
 
-export async function getUserFromToken(): Promise<{ email: string } | null> {
+export async function getUserInfo(): Promise<{ email: string } | null> {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 

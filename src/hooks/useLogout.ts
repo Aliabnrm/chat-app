@@ -1,4 +1,3 @@
-// hooks/useLogout.ts
 export const useLogout = () => {
   const logout = async () => {
     await fetch('/api/auth/logout', {
