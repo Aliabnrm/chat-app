@@ -1,17 +1,10 @@
 'use client'
-import { z } from 'zod'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LockClosedIcon } from '@heroicons/react/24/outline'
-
-const schema = z.object({
-  email: z.string().email({ message: 'ایمیل معتبر نیست' }),
-  password: z.string().min(6, { message: 'رمز عبور باید حداقل ۶ کاراکتر باشد' }),
-})
-
-type FormData = z.infer<typeof schema>
+import { SigninSchema, SigninSchemaType } from '@/src/schema/auth'
 
 export default function SignInPage() {
   const [loading, setLoading] = useState(false)
@@ -20,12 +13,12 @@ export default function SignInPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
+  } = useForm<SigninSchemaType>({
+    resolver: zodResolver(SigninSchema),
     mode: "onTouched"
   })
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: SigninSchemaType) => {
     setLoading(true)
     try {
       const res = await fetch('/api/auth/login', {

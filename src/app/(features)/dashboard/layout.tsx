@@ -1,7 +1,7 @@
 import React from "react";
 import { redirect } from "next/navigation";
+import MainNavbar from "@/src/shared/navbar";
 import { getUserInfo } from "@/src/hooks/useAuth";
-import NavbarServer from "@/src/components/Navbar/NavbarServer";
 
 const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await getUserInfo();
@@ -11,7 +11,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   }
   return (
     <>
-      <NavbarServer userEmail={user.email} />
+      <MainNavbar userEmail={user?.email} />
       <main className="p-4">{children}</main>
     </>
   );

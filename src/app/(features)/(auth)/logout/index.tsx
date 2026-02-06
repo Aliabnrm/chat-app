@@ -1,6 +1,6 @@
 "use client"
-import { useRouter } from 'next/navigation'
 import React from 'react'
+import { useRouter } from 'next/navigation'
 
 const Logout = () => {
   const router = useRouter()

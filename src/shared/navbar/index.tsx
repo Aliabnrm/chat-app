@@ -6,7 +6,7 @@ type Props = {
   userEmail: string;
 };
 
-const NavbarClient = ({ userEmail }: Props) => {
+const MainNavbar = ({ userEmail }: Props) => {
   const { logout } = useLogout();
 
   return (
@@ -27,4 +27,4 @@ const NavbarClient = ({ userEmail }: Props) => {
   );
 };
 
-export default NavbarClient;
+export default MainNavbar;
