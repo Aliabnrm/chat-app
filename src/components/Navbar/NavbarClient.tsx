@@ -1,7 +1,6 @@
 "use client";
-
-import { useLogout } from "@/src/hooks/useLogout";
 import Link from "next/link";
+import { useLogout } from "@/src/hooks/useLogout";
 
 type Props = {
   userEmail: string;
